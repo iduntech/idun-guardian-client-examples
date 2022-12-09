@@ -180,3 +180,10 @@ python get_info_single.py
 ```bash
 python download_data.py
 ```
+
+### **6. Controlled recording**
+- You can also run a controlled recording by using the following command in your python shell or in your python script
+
+```bash
+python main_record.py
+```
