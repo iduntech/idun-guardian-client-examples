@@ -43,12 +43,12 @@
 4. After the environment is activated, install the Python SDK using the following command:
     - With a [conda environment](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) use the following command:
     ```bash
-    pip install idun-guardian-client-beta
+    pip install idun-guardian-client
     ```
     or
     - With a [pipenv environment](https://pypi.org/project/pipenv/) use the following command:
     ```bash
-    pipenv install idun-guardian-client-beta
+    pipenv install idun-guardian-client
     ```
 
 5. After installing the package, make sure that the dependencies are correctly installed by running the following command and inspecting the packages installed in the terminal output:
