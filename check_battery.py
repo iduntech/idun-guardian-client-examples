@@ -1,5 +1,5 @@
 import asyncio
-from idun_guardian_client_beta import GuardianClient
+from idun_guardian_client import GuardianClient
 
 # Get device address
 bci = GuardianClient()

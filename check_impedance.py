@@ -1,5 +1,5 @@
 import asyncio
-from idun_guardian_client_beta import GuardianClient
+from idun_guardian_client import GuardianClient
 
 IMPEDANCE_DURATION = 5  # duration of impedance measurement in seconds
 MAINS_FREQUENCY_60Hz = False
@@ -13,6 +13,6 @@ bci.address = asyncio.run(bci.search_device())
 # start a recording session
 asyncio.run(
     bci.start_impedance(
-        impedance_display_time=IMPEDANCE_DURATION,
-        mains_freq_60hz=MAINS_FREQUENCY_60Hz)
+        impedance_display_time=IMPEDANCE_DURATION, mains_freq_60hz=MAINS_FREQUENCY_60Hz
+    )
 )
