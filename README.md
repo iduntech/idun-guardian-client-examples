@@ -187,3 +187,9 @@ python download_data.py
 ```bash
 python main_record.py
 ```
+### **Notes on line noise**
+- If you are using the SDK in the USA or any other country where the line noise is at 60Hz, you need to change the line noise frequency in the `main_record.py` file by setting the flag such as:
+
+```bash
+MAINS_FREQUENCY_60Hz = True
+```
