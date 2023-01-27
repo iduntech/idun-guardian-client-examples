@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4856132e873b49ba241c680939ed119039a4b89795c898fddb177a440438ff18"
+            "sha256": "f4e56afc01df92b5da25804ff77eb32a0e4281d9c5ce8ff27f3abaafb2443c3b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -152,11 +152,11 @@
         },
         "idun-guardian-client": {
             "hashes": [
-                "sha256:4086c97c49c8fe368081e0f5dc7b54a5faa2753e7fd242a68cdb664fedbb3ab1",
-                "sha256:db0574cbba6343cbea45a4518d342748ef20d27e97d586f1d17c27740031b26e"
+                "sha256:be753ae554dde14b6ea89049315fe92f125824450ef6047f09f1131ea305c032",
+                "sha256:fc80af9fb10289a6277c264e84db44b7ace5195d9b487e571b4caa669588adc5"
             ],
             "index": "pypi",
-            "version": "==0.1.0"
+            "version": "==0.2b2"
         },
         "numpy": {
             "hashes": [

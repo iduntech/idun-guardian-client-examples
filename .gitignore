@@ -1,2 +1,4 @@
 recordings
 logs
+record_lsl_encrypted.py
+lsl_encrypted_utils.py
