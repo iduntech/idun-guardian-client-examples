@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 pip = "*"
-idun-guardian-client = "==0.2b4"
+idun-guardian-client = "==0.2b5"
 pycryptodome = "*"
 
 [dev-packages]

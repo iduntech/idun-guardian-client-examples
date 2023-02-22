@@ -11,9 +11,8 @@ from idun_guardian_client.client import GuardianClient
 from lsl_decrypted_utils import stream_decrypted_data
 
 EXPERIMENT: str = "lsl_stream_decrypted"
-RECORDING_TIMER: int = 10000
-LED_SLEEP: bool = False
-STREAM_LSL: bool = False
+RECORDING_TIMER: int = 1000000
+LED_SLEEP: bool = True
 
 # start a recording session
 bci = GuardianClient()

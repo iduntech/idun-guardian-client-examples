@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "064af1c22ab75d5bd9d2fc738f30e447060a2b756e3577e6749e5484689b58dd"
+            "sha256": "2532e127d8ca981f54371a7d88e7b0c4b8ca1ebcd905263d2405dda7a21f5eb5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -152,11 +152,11 @@
         },
         "idun-guardian-client": {
             "hashes": [
-                "sha256:a62921bd0fb0ed52794e5ddbfb797c0b53770b276996cfcbbf32970c0284c0f3",
-                "sha256:d12b5a46311d1cd1fa2ce09efaa8d3bc006c70ed43efaee790b63e93bdd627c5"
+                "sha256:0ee62b33b70921a9b172bdfaca0bd0768a0b29a9ce6895c52234821eee4ff56e",
+                "sha256:72f90af1c69f040482dbeae6325e12402d65afd028f40319200fc1c0d3f4d67f"
             ],
             "index": "pypi",
-            "version": "==0.2b4"
+            "version": "==0.2b5"
         },
         "numpy": {
             "hashes": [
@@ -194,11 +194,11 @@
         },
         "pip": {
             "hashes": [
-                "sha256:aee438284e82c8def684b0bcc50b1f6ed5e941af97fa940e83e2e8ef1a59da9b",
-                "sha256:b5f88adff801f5ef052bcdef3daa31b55eb67b0fccd6d0106c206fa248e0463c"
+                "sha256:236bcb61156d76c4b8a05821b988c7b8c35bf0da28a4b614e8d6ab5212c25c6f",
+                "sha256:cd015ea1bfb0fcef59d8a286c1f8bebcb983f6317719d415dc5351efb7cd7024"
             ],
             "index": "pypi",
-            "version": "==23.0"
+            "version": "==23.0.1"
         },
         "pycryptodome": {
             "hashes": [
