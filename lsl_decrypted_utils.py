@@ -17,50 +17,33 @@ async def stream_decrypted_data(api_class):
     """
     decrypted_data_model = GuardianDecryptedModel()
     logging_lsl_data_model(GuardianDecryptedModel, True)
+
+    print("create LSL outlet")
+    decrypted_outlet = configure_lsl_outlet(decrypted_data_model)
+
     while True:
         try:
-            decrypted_outlet = configure_lsl_outlet(decrypted_data_model)
             while True:
                 if api_class.final_message_check:
                     break
+
                 decrypted_package = await asyncio.wait_for(
                     api_class.decrypted_data_queue.get(), timeout=5.0
                 )
-                sample = decrypted_package[1]
-                # Find the timestamp of the original package
-                lsl_time_original = calculate_original_lsl_timestamp(
-                    decrypted_package[0]
-                )
-                decrypted_outlet.push_sample([sample], lsl_time_original)
+
+                for idx, _ in enumerate(decrypted_package["timestamp"]):
+                    sample = decrypted_package["ch1"][idx]
+                    decrypted_outlet.push_sample([sample], local_clock())
+
+                api_class.decrypted_data_queue.task_done()  # Notify receive_messages that we are done
+
             if api_class.final_message_check:
                 break
+
         except Exception as lsl_error:
             logging_lsl_errors(lsl_error, api_class.debug)
+            pass
     logging_ending_decryption(api_class.debug)
-
-
-def calculate_original_lsl_timestamp(original_package_timestamp):
-    """Calculate the original LSL timestamp
-
-    Args:
-        original_package_timestamp (float):  Timestamp of the original package in seconds from 1970,1,1
-
-    Returns:
-        float: Original LSL timestamp in seconds and LSL referenced time
-    """
-    # Find the current timestamp using same format as the original package timestamp
-    current_timestamp = float(
-        datetime.datetime.fromisoformat(
-            datetime.datetime.now().astimezone().isoformat()
-        ).timestamp()
-    )
-    # calculate the difference or error between the the original package timestamp and the current timestamp
-    difference_to_current_time = current_timestamp - original_package_timestamp
-    # Calculate the LSL timestamp
-    lsl_time_current = local_clock()
-    # Calculate the LSL timestamp of the original package by removing the difference or error to the current time
-    lsl_time_original = lsl_time_current - difference_to_current_time
-    return lsl_time_original
 
 
 def configure_lsl_outlet(datamodel):
@@ -108,9 +91,9 @@ def logging_ending_decryption(debug):
 class GuardianDecryptedModel:
     """Data model for Guardian data"""
 
-    name: str = "Decrypted_EEG_IMU"
-    type: str = "Decrypted_EEG_IMU"
+    name: str = "EEG_data"
+    type: str = "EEG"
     channel_count: int = 1
-    nominal_srate: int = 0
+    nominal_srate: int = 250
     channel_format: str = "float32"
-    source_id: str = "Decrypted_EEG_data_id"
+    source_id: str = "EEG_data_id"

@@ -12,7 +12,7 @@ from lsl_decrypted_utils import stream_decrypted_data
 
 EXPERIMENT: str = "lsl_stream_decrypted"
 RECORDING_TIMER: int = 1000000
-LED_SLEEP: bool = True
+LED_SLEEP: bool = False
 
 # start a recording session
 bci = GuardianClient()
