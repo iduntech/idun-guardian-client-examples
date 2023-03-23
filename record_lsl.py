@@ -8,9 +8,9 @@ import sys
 subprocess.check_call([sys.executable, "-m", "pip", "install", "pylsl"])
 import asyncio
 from idun_guardian_client.client import GuardianClient
-from lsl_decrypted_utils import stream_decrypted_data
+from lsl_utils import stream_data
 
-EXPERIMENT: str = "lsl_stream_decrypted"
+EXPERIMENT: str = "lsl_stream"
 RECORDING_TIMER: int = 1000000
 LED_SLEEP: bool = False
 
@@ -27,7 +27,7 @@ async def main():
         bci.start_recording(
             recording_timer=RECORDING_TIMER, led_sleep=LED_SLEEP, experiment=EXPERIMENT
         ),
-        stream_decrypted_data(bci.guardian_api),
+        stream_data(bci.guardian_api),
     )
 
 

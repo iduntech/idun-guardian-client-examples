@@ -6,7 +6,7 @@ from dataclasses import dataclass, asdict
 import datetime
 
 
-async def stream_decrypted_data(api_class):
+async def stream_data(api_class):
     """Send data to the LSL stream
 
     Args:
