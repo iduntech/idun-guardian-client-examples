@@ -44,10 +44,12 @@ IMPEDANCE_DURATION = 5  # duration of impedance measurement in seconds
 MAINS_FREQUENCY_60Hz = False
 # mains frequency in Hz (50 or 60), for Europe 50Hz, for US 60Hz
 
-# display impedance
+# start a recording session
 asyncio.run(
-    bci.start_impedance(
-        impedance_display_time=IMPEDANCE_DURATION, mains_freq_60hz=MAINS_FREQUENCY_60Hz
+    bci.start_recording(
+        recording_timer=IMPEDANCE_DURATION,
+        mains_freq_60hz=MAINS_FREQUENCY_60Hz,
+        impedance_measurement=True,
     )
 )
 

@@ -2,10 +2,6 @@
 Sample script for using the Guardian Earbud Client
 - Start recording data from the Guardian Earbuds
 """
-import subprocess
-import sys
-
-subprocess.check_call([sys.executable, "-m", "pip", "install", "pylsl"])
 import asyncio
 from idun_guardian_client.client import GuardianClient
 from lsl_utils import stream_data

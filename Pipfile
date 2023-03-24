@@ -5,8 +5,8 @@ name = "pypi"
 
 [packages]
 pip = "*"
-idun-guardian-client = "==0.2b8"
-pycryptodome = "*"
+idun-guardian-client = "*"
+pylsl = "*"
 
 [dev-packages]
 
