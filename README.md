@@ -11,18 +11,21 @@
 ## Prerequisites
 
 - [Python 3.10](https://www.python.org/downloads/release/python-3100), if you already have another python version installed and you do not want to create a virtual environment to run the SDK, then you have to install Python 3.10 and [set it as your default Python](https://www.youtube.com/watch?v=zriWqGNJg4k).
-    - If you have conflicts whith other packages when installing the Python SDK:
+    - The packages are already listed in the conda.yml and Pipfile. You can install what you need by using these commands:
         -  Use [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) which will create an environment and configure your python version to the correct one with the following command: 
         
         ```bash
-        conda create -n idun_env python=3.10
+        conda env create -f conda.yml
         ```
+        
         or
         - Use [Pipenv](https://pypi.org/project/pipenv/) which will create your virtual environment imanually using the following command. 
         
         ```bash
-        pipenv install --python 3.10
+        pipenv install
         ```
+
+
     
 ---
 
