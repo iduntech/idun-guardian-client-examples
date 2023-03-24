@@ -44,10 +44,12 @@ IMPEDANCE_DURATION = 5  # duration of impedance measurement in seconds
 MAINS_FREQUENCY_60Hz = False
 # mains frequency in Hz (50 or 60), for Europe 50Hz, for US 60Hz
 
-# display impedance
+# start a recording session
 asyncio.run(
-    bci.start_impedance(
-        impedance_display_time=IMPEDANCE_DURATION, mains_freq_60hz=MAINS_FREQUENCY_60Hz
+    bci.start_recording(
+        recording_timer=IMPEDANCE_DURATION,
+        mains_freq_60hz=MAINS_FREQUENCY_60Hz,
+        impedance_measurement=True,
     )
 )
 
@@ -78,7 +80,7 @@ if recording_type == "1":
         filling = True
         while filling:
             impedance = input("\nImpedance:                                    ")
-            environment = input("\nTesting Environemnt:                          ")
+            environment = input("\nTesting Environment:                          ")
             comfort = input(
                 "\nOverall Comfort of the Device \n(1-10; 1=painful, 10=very comfortable):       "
             )
@@ -123,7 +125,7 @@ elif recording_type == "2":
         filling = True
         while filling:
             impedance = input("\nImpedance:                                    ")
-            environment = input("\nTesting Environemnt:                          ")
+            environment = input("\nTesting Environment:                          ")
             comfort = input(
                 "\nOverall Comfort of the Device \n(1-10; 1=painful, 10=very comfortable):       "
             )
@@ -168,7 +170,7 @@ elif recording_type == "3":
         filling = True
         while filling:
             impedance = input("\nImpedance:                                    ")
-            environment = input("\nTesting Environemnt:                          ")
+            environment = input("\nTesting Environment:                          ")
             comfort = input(
                 "\nOverall Comfort of the Device \n(1-10; 1=painful, 10=very comfortable):       "
             )
@@ -220,7 +222,7 @@ elif recording_type == "4":
         filling = True
         while filling:
             impedance = input("\nImpedance:                                    ")
-            environment = input("\nTesting Environemnt:                          ")
+            environment = input("\nTesting Environment:                          ")
             comfort = input(
                 "\nOverall Comfort of the Device \n(1-10; 1=painful, 10=very comfortable):       "
             )

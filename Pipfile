@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 pip = "*"
 idun-guardian-client = "*"
+pylsl = "*"
 
 [dev-packages]
 
