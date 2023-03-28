@@ -3,7 +3,7 @@ from idun_guardian_client import GuardianClient
 
 
 EXPERIMENT: str = "Sleeping"
-RECORDING_TIMER: int = 5000  # 10 hours in seconds
+RECORDING_TIMER: int = 36000  # 10 hours in seconds
 LED_SLEEP: bool = False
 
 # start a recording session
