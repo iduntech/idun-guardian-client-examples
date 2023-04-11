@@ -5,8 +5,10 @@ from idun_guardian_client import GuardianClient
 EXPERIMENT: str = "Sleeping"
 RECORDING_TIMER: int = 36000  # 10 hours in seconds
 LED_SLEEP: bool = False
-SENDING_TIMEOUT: float = 2 # If you experience disruptions, try increasing this value
-BI_DIRECTIONAL_TIMEOUT: float = 20  # If you experience disruptions, try increasing this value
+SENDING_TIMEOUT: float = 2 # If no receipt is received for 2 seconds, the data is buffered
+                           # If you experience excessive disruptions, try increasing this value
+BI_DIRECTIONAL_TIMEOUT: float = 20  # If no bi-directional data is received for 20 seconds, the connection is re-established
+                                    # If you experience excessive disruptions, try increasing this value
 
 # start a recording session
 bci = GuardianClient()
