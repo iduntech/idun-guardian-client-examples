@@ -9,8 +9,8 @@ from lsl_utils import stream_data
 EXPERIMENT: str = "lsl_stream"
 RECORDING_TIMER: int = 1000000
 LED_SLEEP: bool = True
-SENDING_TIMEOUT: float = 2
-BI_DIRECTIONAL_TIMEOUT: float = 4
+SENDING_TIMEOUT: float = 2  # If you experience disruptions, try increasing this value
+BI_DIRECTIONAL_TIMEOUT: float = 4  # If you experience disruptions, try increasing this value
 
 # start a recording session
 bci = GuardianClient()
