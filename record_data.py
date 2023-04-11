@@ -5,7 +5,7 @@ from idun_guardian_client import GuardianClient
 EXPERIMENT: str = "Sleeping"
 RECORDING_TIMER: int = 36000  # 10 hours in seconds
 LED_SLEEP: bool = False
-SENDING_TIMEOUT: float = 1
+SENDING_TIMEOUT: float = 2
 BI_DIRECTIONAL_TIMEOUT: float = 20
 
 # start a recording session

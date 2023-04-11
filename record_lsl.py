@@ -9,7 +9,7 @@ from lsl_utils import stream_data
 EXPERIMENT: str = "lsl_stream"
 RECORDING_TIMER: int = 1000000
 LED_SLEEP: bool = True
-SENDING_TIMEOUT: float = 1
+SENDING_TIMEOUT: float = 2
 BI_DIRECTIONAL_TIMEOUT: float = 4
 
 # start a recording session
