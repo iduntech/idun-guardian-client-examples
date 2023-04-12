@@ -8,7 +8,11 @@ from lsl_utils import stream_data
 
 EXPERIMENT: str = "lsl_stream"
 RECORDING_TIMER: int = 1000000
-LED_SLEEP: bool = False
+LED_SLEEP: bool = True
+SENDING_TIMEOUT: float = 2  # If no receipt is received for 2 seconds, the data is buffered
+                           # If you experience excessive disruptions, try increasing this value
+BI_DIRECTIONAL_TIMEOUT: float = 4  # If no bi-directional data is received for 4 seconds, the connection is re-established
+                                    # If you experience excessive disruptions, try increasing this value
 
 # start a recording session
 bci = GuardianClient()
@@ -21,7 +25,11 @@ async def main():
     """
     await asyncio.gather(
         bci.start_recording(
-            recording_timer=RECORDING_TIMER, led_sleep=LED_SLEEP, experiment=EXPERIMENT
+            recording_timer=RECORDING_TIMER,
+            led_sleep=LED_SLEEP,
+            experiment=EXPERIMENT,
+            sending_timout=SENDING_TIMEOUT,
+            bi_directional_receiving_timeout=BI_DIRECTIONAL_TIMEOUT,
         ),
         stream_data(bci.guardian_api),
     )
