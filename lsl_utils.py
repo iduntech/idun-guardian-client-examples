@@ -24,7 +24,7 @@ async def stream_data(api_class):
     while True:
         try:
             while True:
-                if api_class.final_message_check:
+                if api_class.final_message_sent:
                     break
 
                 decrypted_package = await asyncio.wait_for(
@@ -37,7 +37,7 @@ async def stream_data(api_class):
 
                 api_class.decrypted_data_queue.task_done()  # Notify receive_messages that we are done
 
-            if api_class.final_message_check:
+            if api_class.final_message_sent:
                 break
 
         except Exception as lsl_error:
