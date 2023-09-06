@@ -196,3 +196,62 @@ python main_record.py
 ```bash
 MAINS_FREQUENCY_60Hz = True
 ```
+
+
+## Adding meta data to recording
+
+### **6. Post New Metadata for a Recording**
+
+- This example illustrates how to use create_metadata.py to post new metadata for a specific recording. This script will create a new metadata entry, and this metadata will be linked to a returned metadata ID.
+
+```python
+python create_metadata.py
+```
+
+### **7. Create Markers for a Recording**
+
+- This example demonstrates how to use the create_markers.py script to add new markers to an existing metadata ID. The script creates new marker entries, which will be added to the specified metadata. Note: Before running this script, you should have already created metadata for the recording using create_metadata.py.
+
+```python
+python create_markers.py
+```
+
+### **7. Create Markers and Meta data for a Recording**
+
+- This example shows you how to use a Python script to post both new metadata and markers for a specific recording. The script will create a new metadata entry along with markers, and this metadata will be associated with a returned metadata ID. Before running this script, make sure you have set up the recording for which you are creating metadata and markers.
+
+```python
+python create_metadata_and_markers.py
+```
+
+### **8. List meta data for a recording and metadata ID**
+
+- This example demonstrates how to retrieve metadata associated with a specific recording. It fetches the metadata based on the metadata ID and the recording ID. Before running this script, ensure you have already posted metadata for the recording.
+
+```python
+python get_metadata_by_id.py
+```
+
+### **9. List all markers for a recording and metadata ID**
+
+- This example demonstrates how to add new markers to an existing metadata ID. The new markers will be associated with a given recording and metadata ID. To execute this script, make sure you have already created metadata using the create_metadata.py example.
+
+```python
+python get_markers_by_id.py
+```
+
+### **10. List all meta data for a recording**
+
+- This example demonstrates how to list all metadata entries associated with a specific recording. You can specify the number of entries to be returned in one request (LIMIT) and, if needed, where to start fetching new metadata (CURSOR).
+
+```python
+python list_all_metadata.py
+```
+
+## Stopping a recording that was stopped incorrectly
+
+- If you have stopped a recording incorrectly, you can use the following command to stop the recording correctly:
+
+```bash
+python stop_recording.py
+```
