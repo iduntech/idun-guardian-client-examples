@@ -6,11 +6,11 @@ from dataclasses import dataclass, asdict
 import datetime
 
 
-async def stream_data(api_class):
+async def stream_data(api_class, filter_data=True):
     """Send data to the LSL stream
 
     Args:
-        decrypted_data_queue (asyncio.Queue): Queue containing decrypted data
+        data_queue (asyncio.Queue): Queue containing decrypted data
 
     Returns:
         None
@@ -27,15 +27,26 @@ async def stream_data(api_class):
                 if api_class.final_message_sent:
                     break
 
-                decrypted_package = await asyncio.wait_for(
-                    api_class.decrypted_data_queue.get(), timeout=5.0
-                )
+                if filter_data:
+                    decrypted_package = await asyncio.wait_for(
+                        api_class.decrypted_bandpass_eeg_queue.get(), timeout=5.0
+                    )
 
-                for idx, _ in enumerate(decrypted_package["timestamp"]):
-                    sample = decrypted_package["ch1"][idx]
-                    decrypted_outlet.push_sample([sample], local_clock())
+                    for idx, _ in enumerate(decrypted_package["timestamp"]):
+                        sample = decrypted_package["ch1"][idx]
+                        decrypted_outlet.push_sample([sample], local_clock())
 
-                api_class.decrypted_data_queue.task_done()  # Notify receive_messages that we are done
+                    api_class.decrypted_bandpass_eeg_queue.task_done()  # Notify receive_messages that we are done
+                else:
+                    decrypted_package = await asyncio.wait_for(
+                        api_class.decrypted_raw_eeg_queue.get(), timeout=5.0
+                    )
+
+                    for idx, _ in enumerate(decrypted_package["timestamp"]):
+                        sample = decrypted_package["ch1"][idx]
+                        decrypted_outlet.push_sample([sample], local_clock())
+
+                    api_class.decrypted_raw_eeg_queue.task_done()  # Notify receive_messages that we are done
 
             if api_class.final_message_sent:
                 break
@@ -97,3 +108,4 @@ class GuardianDecryptedModel:
     nominal_srate: int = 250
     channel_format: str = "float32"
     source_id: str = "EEG_data_id"
+
