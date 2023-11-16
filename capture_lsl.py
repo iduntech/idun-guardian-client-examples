@@ -9,6 +9,8 @@ from pyqtgraph.Qt import QtCore, QtGui
 from PyQt6 import QtCore, QtWidgets
 import sys
 import asyncio
+from pyqtgraph import ColorMap
+
 
 # Queues for EEG data and spectrogram plotting
 SFREQ = 250              # Sampling frequency in Hz
@@ -109,6 +111,7 @@ class SpectrogramPlotter(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        
         self.main_widget = QtWidgets.QWidget()
         self.setCentralWidget(self.main_widget)
         layout = QtWidgets.QVBoxLayout(self.main_widget)
@@ -116,8 +119,13 @@ class SpectrogramPlotter(QtWidgets.QMainWindow):
         self.spectrogram_widget = pg.PlotWidget()
         layout.addWidget(self.spectrogram_widget)
         self.spectrogram_image = pg.ImageItem()
-        self.spectrogram_widget.addItem(self.spectrogram_image)
+        colormap = pg.colormap.get('viridis')  # You can choose 'hot', 'jet', etc.
+    #    Apply the colormap to the spectrogram image
+        self.spectrogram_image.setLookupTable(colormap.getLookupTable())
 
+
+        self.spectrogram_widget.addItem(self.spectrogram_image)
+        
         # Set up axes for the spectrogram
         self.spectrogram_widget.getPlotItem().setLabels(left='Frequency (Hz)', bottom='Time (s)')
         self.spectrogram_widget.getPlotItem().showGrid(True, True, 0.7)
