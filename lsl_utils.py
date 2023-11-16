@@ -79,6 +79,13 @@ def configure_lsl_outlet(datamodel):
     )
     return data_outlet
 
+def find_index(streams_available, stream_name):
+    print("------------------")
+    for i in range(len(streams_available)):
+        print(streams_available[i].name())
+        if streams_available[i].name() == stream_name:
+            print(f"Found {stream_name} at index {i}")
+            return i
 
 def logging_lsl_data_model(GuardianDecryptedModel, debug):
     if debug:
