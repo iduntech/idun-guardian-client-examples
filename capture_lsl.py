@@ -134,6 +134,8 @@ class SpectrogramPlotter(QtWidgets.QMainWindow):
             # Concatenate the spectrogram data for the plot
             spectrogram_data_for_plot = np.concatenate(spectrogram_queue, axis=1)
 
+            if spectrogram_data_for_plot.shape[1] > 10 * SFREQ:
+                spectrogram_data_for_plot = spectrogram_data_for_plot[:, -10*SFREQ:]
             # Update the plot
             self.spectrogram_image.setImage(spectrogram_data_for_plot.T, autoLevels=True)
 
