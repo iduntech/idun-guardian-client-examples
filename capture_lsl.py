@@ -54,23 +54,27 @@ def get_classifier_prediction():
     idx = 0
     while True:
         if len(eeg_queue) != 0:
-            eeg_sample = eeg_queue.pop(0)
-            eeg_buffer.append(eeg_sample)
-
+            eeg_sample = eeg_queue.pop(0)  # Get a new sample
+            eeg_buffer.append(eeg_sample)  # Add it to the buffer
             idx += 1
             if idx >= SFREQ:
-                spectogram_data = calculate_multitaper_powerspectrum(
-                    eeg_buffer[-SFREQ:],  # Last 1 second of data
-                    SPECTOGRAM_FREQUENCY_BINS,
-                    NUMBER_OF_CYCLES,
-                    TIME_BANDWIDTH,
-                    SFREQ,
-                )
-                if len(spectrogram_queue) >= 10 * SFREQ:
-                    spectrogram_queue.pop(0)  # Remove oldest second
-                spectrogram_queue.append(spectogram_data)
+                # Make sure we have at least 10 seconds of data
+                if len(eeg_buffer) >= 10 * SFREQ:
+                    # Calculate the spectrogram for the last 10 seconds
+                    full_spectrogram = calculate_multitaper_powerspectrum(
+                        eeg_buffer[-10*SFREQ:],  # Last 10 seconds of data
+                        SPECTOGRAM_FREQUENCY_BINS,
+                        NUMBER_OF_CYCLES,
+                        TIME_BANDWIDTH,
+                        SFREQ,
+                    )
+                    # Get only the last second of the calculated spectrogram
+                    last_second_spectrogram = full_spectrogram[:, -SFREQ:]
+                    # Manage the spectrogram queue
+                    if len(spectrogram_queue) >= 10:
+                        spectrogram_queue.pop(0)  # Remove the oldest second
+                    spectrogram_queue.append(last_second_spectrogram)
                 idx = 0
-
 
 def calculate_multitaper_powerspectrum(
     experiment_filtered_eeg_data,
@@ -151,11 +155,6 @@ class SpectrogramPlotter(QtWidgets.QMainWindow):
             self.spectrogram_widget.getPlotItem().getViewBox().setAspectLocked(lock=False)
             self.spectrogram_widget.getPlotItem().setXRange(0, 10 * SFREQ)  # Display 10 seconds
             self.spectrogram_widget.getPlotItem().setYRange(1, 35)  # Assuming frequency range is 1 to 35 Hz
-
-
-
-
-
 
 
 def eeg_classifier():
