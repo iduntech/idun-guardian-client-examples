@@ -52,36 +52,36 @@ def get_classifier_prediction():
     global eeg_buffer, spectrogram_queue, eeg_queue
 
     idx = 0
+    offset = 25  # Start new calculation after 25 samples
+
     while True:
         if len(eeg_queue) != 0:
-            eeg_sample = eeg_queue.pop(0)  # Get a new sample
-            eeg_buffer.append(eeg_sample)  # Add it to the buffer
+            eeg_sample = eeg_queue.pop(0)
+            eeg_buffer.append(eeg_sample)
             idx += 1
 
-            if idx >= SFREQ:
-                if len(eeg_buffer) >= 10 * SFREQ:
-                    # Calculate the spectrogram for the last 10 seconds
-                    full_spectrogram = calculate_multitaper_powerspectrum(
-                        eeg_buffer[-10*SFREQ:],  # Last 10 seconds of data
-                        SPECTOGRAM_FREQUENCY_BINS,
-                        NUMBER_OF_CYCLES,
-                        TIME_BANDWIDTH,
-                        SFREQ,
-                    )
-                    # Get only the last second of the calculated spectrogram
-                    last_second_spectrogram = full_spectrogram[:, -SFREQ:]
+            # Start new spectrogram calculation at a specified offset
+            if idx % offset == 0 and len(eeg_buffer) >= BUFFER_SIZE:
+                segment_spectrogram = calculate_multitaper_powerspectrum(
+                    eeg_buffer[-BUFFER_SIZE:],  # Use the last 10 seconds of data
+                    SPECTOGRAM_FREQUENCY_BINS,
+                    NUMBER_OF_CYCLES,
+                    TIME_BANDWIDTH,
+                    SFREQ,
+                )
+                # Add the last second of the new spectrogram data to the queue
+                # reshape (35, 2500) to 10, 35, 250
+                spectrogram_queue.append(segment_spectrogram[:, -int(SFREQ/10):])
 
-                    # Add data in chunks of 25 samples to the queue
-                    for i in range(0, last_second_spectrogram.shape[1], 25):
-                        chunk_data = last_second_spectrogram[:, i:i+25]
-                        spectrogram_queue.append(chunk_data)
+                # remove the first second of eeg_buffer
+                eeg_buffer = eeg_buffer[int(SFREQ/10):]
 
-                    # Ensure the queue doesn't grow beyond 10 seconds of data
-                    while len(spectrogram_queue) > 10 * SFREQ / 25:
-                        print("Queue too long, popping data")
-                        spectrogram_queue.pop(0)
+                # last_second_spectrogram = segment_spectrogram[:, -SFREQ:]
+                # spectrogram_queue.append(last_second_spectrogram)
 
-                idx = 0
+                # # Remove the last second of data from the buffer on which the spectrogram was calculated
+                # eeg_buffer = eeg_buffer[:-SFREQ]
+
 
 
 
@@ -151,18 +151,13 @@ class SpectrogramPlotter(QtWidgets.QMainWindow):
     def update_plot(self):
         global spectrogram_history, eeg_buffer, spectrogram_queue, eeg_queue
 
-        if len(spectrogram_queue) > 0:
-            # Get the next chunk of spectrogram data (25 samples)
-            chunk_data = spectrogram_queue.pop(0)
+        while len(spectrogram_queue) > 0:
+            # Retrieve the next second of spectrogram data
+            new_data = spectrogram_queue.pop(0)
 
-            # Calculate the number of columns in the chunk
-            chunk_columns = chunk_data.shape[1]
-
-            # Shift the existing spectrogram data to the left by the size of the chunk
-            spectrogram_history[:, :-chunk_columns] = spectrogram_history[:, chunk_columns:]
-
-            # Insert the new chunk's data on the right
-            spectrogram_history[:, -chunk_columns:] = chunk_data
+            # Update the spectrogram history
+            spectrogram_history[:, :-int(SFREQ/10)] = spectrogram_history[:, int(SFREQ/10):]
+            spectrogram_history[:, -int(SFREQ/10):] = new_data
 
             # Update the plot
             self.spectrogram_image.setImage(spectrogram_history.T, autoLevels=True)
@@ -170,7 +165,8 @@ class SpectrogramPlotter(QtWidgets.QMainWindow):
             # Set aspect ratio and axis ranges
             self.spectrogram_widget.getPlotItem().getViewBox().setAspectLocked(lock=False)
             self.spectrogram_widget.getPlotItem().setXRange(0, 10 * SFREQ)
-            self.spectrogram_widget.getPlotItem().setYRange(1, 35)  # Assuming frequency range is 1 to 35 Hz
+            self.spectrogram_widget.getPlotItem().setYRange(1, 35)
+
 
 
 
